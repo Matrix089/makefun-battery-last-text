@@ -5,26 +5,28 @@ The Battery's Last Text to Its Charger bounty.
 Why this entry fits the judge's brief: it is the battery's last
 text to the charger it waited for all day, in its own voice --
 needy, then spiteful. The setup (waited all day at 2%) earns the
-punch, which lands in the final words: it is not begging for a
-charge any more, it has moved on to the power bank. That turn
-goes past the obvious dying-battery complaint, and the line
-reads like something a person would actually type.
+punch, which lands in the final words: instead of begging for a
+charge or moving on to another charger, the battery spends its
+very last percent on revenge -- deleting the alarm, so the owner
+oversleeps. That turn goes past the obvious dying-battery
+complaint and the stock breakup joke, and the line reads like
+something a person would actually type.
 """
 
 import os
 
 LINE = (
-    "I waited all day at 2% for you. You plug me in now? "
-    "Sorry, I'm already dating the power bank."
+    "I waited all day at 2% for you. "
+    "So I spent my last 1% deleting your alarm. Sleep well."
 )
 
 
 def validate_line(line: str) -> None:
     # The gate: UTF-8 text, 1-200 characters, a single line.
-    # The line was counted at exactly 93 characters; pin that
+    # The line was counted at exactly 86 characters; pin that
     # so any accidental wording change fails loudly instead of
     # silently shipping a different (or over-long) entry.
-    assert len(line) == 93, f"line is {len(line)} characters, expected 93"
+    assert len(line) == 86, f"line is {len(line)} characters, expected 86"
     assert "\n" not in line, "line must be a single line"
     assert "\r" not in line, "line must be a single line"
     assert 1 <= len(line) <= 200, f"line is {len(line)} characters"
@@ -37,7 +39,7 @@ def verify_output(path: str) -> None:
     with open(path, "rb") as f:
         raw = f.read()
     assert raw.decode("utf-8") == LINE, "entry.txt does not match the line"
-    assert len(raw.decode("utf-8")) == 93, "entry.txt is not 93 characters"
+    assert len(raw.decode("utf-8")) == 86, "entry.txt is not 86 characters"
     assert b"\n" not in raw, "entry.txt must be a single line"
     assert not raw.endswith(b"\n"), "entry.txt must have no trailing newline"
 
